@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="service" href="sw.js">
+    <title>Document</title>
+</head>
+<body>
+    <h1>HELLO</h1>
+</body>
+<script>
+    if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        registration.addEventListener("updatefound", () => {
+          // If updatefound is fired, it means that there's
+          // a new service worker being installed.
+          const installingWorker = registration.installing;
+          console.log(
+            "A new service worker is being installed:",
+            installingWorker
+          );
+  
+          // You can listen for changes to the installing service worker's
+          // state via installingWorker.onstatechange
+        });
+      })
+      .catch((error) => {
+        console.error(`Service worker registration failed: ${error}`);
+      });
+  } else {
+    console.error("Service workers are not supported.");
+  }
+  </script>
+</html>
